@@ -20,17 +20,40 @@
  * Network:           true
  */
 
+namespace My_Own_CDN;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-/**
- * Begins execution of the plugin.
- *
- * @since 1.0.0
- */
-function my_own_cdn_init() {
+define( 'MY_OWN_CDN_PATH', plugin_dir_path( __FILE__ ) );
 
+spl_autoload_register( __NAMESPACE__ . '\autoload' );
+
+/**
+ * Autoload plugin classes.
+ *
+ * @param string $class_name Class to load.
+ */
+function autoload( string $class_name ): void {
+	$prefix = 'My_Own_CDN\\';
+	$length = strlen( $prefix );
+
+	if ( 0 !== strncmp( $prefix, $class_name, $length ) ) {
+		return; // Not a supported class.
+	}
+
+	$rel_class = substr( $class_name, $length );
+
+	$path = explode( '\\', strtolower( $rel_class ) );
+	$file = array_pop( $path );
+
+	$file = MY_OWN_CDN_PATH . 'app' . implode( DIRECTORY_SEPARATOR, $path ) . '/class-' . $file . '.php';
+
+	if ( file_exists( $file ) ) {
+		require_once $file;
+	}
 }
-my_own_cdn_init();
+
+Core::instance()->run();
