@@ -4,7 +4,7 @@
  *
  * @link              https://myowncdn.com
  * @since             1.0.0
- * @package           My_Own_CDN
+ * @package           MyOwnCDN
  *
  * @wordpress-plugin
  * Plugin Name:       My Own CDN
@@ -20,7 +20,7 @@
  * Network:           true
  */
 
-namespace My_Own_CDN;
+namespace MyOwnCDN;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -37,19 +37,16 @@ spl_autoload_register( __NAMESPACE__ . '\autoload' );
  * @param string $class_name Class to load.
  */
 function autoload( string $class_name ): void {
-	$prefix = 'My_Own_CDN\\';
-	$length = strlen( $prefix );
+	$length = strlen( __NAMESPACE__ );
 
-	if ( 0 !== strncmp( $prefix, $class_name, $length ) ) {
+	if ( 0 !== strncmp( __NAMESPACE__, $class_name, $length ) ) {
 		return; // Not a supported class.
 	}
 
 	$rel_class = substr( $class_name, $length );
+	$rel_class = str_replace( '\\', DIRECTORY_SEPARATOR, $rel_class );
 
-	$path = explode( '\\', strtolower( $rel_class ) );
-	$file = array_pop( $path );
-
-	$file = MY_OWN_CDN_PATH . 'app' . implode( DIRECTORY_SEPARATOR, $path ) . '/class-' . $file . '.php';
+	$file = MY_OWN_CDN_PATH . 'App/' . $rel_class . '.php';
 
 	if ( file_exists( $file ) ) {
 		require_once $file;
