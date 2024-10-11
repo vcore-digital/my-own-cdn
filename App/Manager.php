@@ -12,7 +12,7 @@ namespace MyOwnCDN;
 
 use InvalidArgumentException;
 use MyOwnCDN\Contracts\Provider;
-use MyOwnCDN\Drivers\Bunny;
+use MyOwnCDN\Providers\Bunny;
 
 /**
  * Manager class.

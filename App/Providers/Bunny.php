@@ -1,6 +1,6 @@
 <?php /* phpcs:ignore WordPress.Files.FileName.InvalidClassFileName */
 
-namespace MyOwnCDN\Drivers;
+namespace MyOwnCDN\Providers;
 
 use MyOwnCDN\Contracts\Provider;
 use MyOwnCDN\Responses\ProviderResponse;
