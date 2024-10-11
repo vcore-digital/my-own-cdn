@@ -51,19 +51,8 @@ class Core {
 	public function run() {
 		// Init admin functionality.
 		// Init frontend functionality.
-		$images = array(
-			'https://example.com/image1.jpg',
-			'https://example.com/image2.jpg',
-			'https://example.com/image3.jpg',
-		);
 
-		$generator = CDN::url()->using( 'bunny', 'image' );
-		foreach ( $images as $image ) {
-			$cdn_url = $generator->origin( $image )();
-			$new_url = $cdn_url->url;
-		}
-
-		//$my_own_cdn = CDN::url()->using( 'bunny', 'image' )->origin( 'https://example.com/image.jpg' );
-		//$cdn_url    = $my_own_cdn()->url;
+		$parser = new Parser();
+		$parser->init();
 	}
 }
