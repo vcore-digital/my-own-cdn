@@ -10,10 +10,14 @@
 
 namespace MyOwnCDN;
 
+use MyOwnCDN\Traits\HasRegex;
+
 /**
  * Parser class.
  */
 class Parser {
+	use HasRegex;
+
 	/**
 	 * Init the module.
 	 *
@@ -67,20 +71,13 @@ class Parser {
 			return $buffer;
 		}
 
-		// TODO: get the provider from the settings.
-		$generator = CDN::url()->using( 'bunny', 'image' );
-
 		foreach ( $images[0] as $key => $image_dom ) {
-			/**
-			 * Reference
-			 *
-			 * @var string $image_dom         Image DOM object.
-			 * @var string $images[1][ $key ] Image src value.
-			 * @var string $images[2][ $key ] Image srcset value.
-			 */
+			$image = Image::element()
+				->dom( $image_dom )
+				->src( $images[1][ $key ] )
+				->srcset( $images[2][ $key ] );
 
-			$cdn    = $generator->origin( $images[1][ $key ] )();
-			$buffer = str_replace( $image_dom, $cdn->url, $buffer );
+			$buffer = str_replace( $image_dom, $image->get_processed(), $buffer );
 		}
 
 		return $buffer;
@@ -96,11 +93,12 @@ class Parser {
 	 * @return array
 	 */
 	private function get_images( string $buffer ): array {
-		if ( preg_match( '/(?=<body).*<\/body>/is', $buffer, $body ) ) {
-			$pattern = '/<(?:img|source)\b(?>\s+(?:src=[\'"]([^\'"]*)[\'"]|srcset=[\'"]([^\'"]*)[\'"])|[^\s>]+|\s+)*>/i';
-			if ( preg_match_all( $pattern, $body[0], $images ) ) {
-				return $images;
-			}
+		if ( ! preg_match( $this->get_body_content(), $buffer, $body ) ) {
+			return array(); // No content found.
+		}
+
+		if ( preg_match_all( $this->get_all_images(), $body[0], $images ) ) {
+			return $images;
 		}
 
 		return array();

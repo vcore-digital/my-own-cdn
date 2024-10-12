@@ -39,10 +39,27 @@ class Bunny implements Provider {
 	 * @return ProviderResponse
 	 */
 	public function url( string $origin ): ProviderResponse {
+		$image = $this->replace_cdn_url( $origin );
+
 		return new ProviderResponse(
 			$origin,
 			$this->type,
-			'https://bunnycdn'
+			$image
 		);
+	}
+
+	/**
+	 * Add the CDN domain to image URLs.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $image_url Image URL.
+	 *
+	 * @return string
+	 */
+	private function replace_cdn_url( string $image_url ): string {
+		$domain = wp_parse_url( get_site_url(), PHP_URL_HOST );
+		// TODO: this should be a setting.
+		return str_replace( $domain, 'bunny.net', $image_url );
 	}
 }

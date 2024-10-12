@@ -30,6 +30,15 @@ class Manager {
 	);
 
 	/**
+	 * Cache of resolved providers.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	private array $cache = array();
+
+	/**
 	 * Resolve name to a provider.
 	 *
 	 * @since 1.0.0
@@ -40,15 +49,23 @@ class Manager {
 	 * @return Provider
 	 */
 	public function resolve( string $name ): Provider {
+		// Cache the provider, in case the initialization is expensive.
+		if ( isset( $this->cache[ $name ] ) ) {
+			return $this->cache[ $name ];
+		}
+
+		// Check registered providers.
 		if ( array_key_exists( $name, $this->providers ) ) {
-			return new $this->providers[ $name ]();
+			$this->cache[ $name ] = new $this->providers[ $name ]();
+			return $this->cache[ $name ];
 		}
 
 		// Look for a custom provider.
 		$provider_method = 'create_' . strtolower( $name ) . '_provider';
 
 		if ( method_exists( $this, $provider_method ) ) {
-			return $this->{$provider_method}();
+			$this->cache[ $name ] = $this->{$provider_method}();
+			return $this->cache[ $name ];
 		}
 
 		/* translators: %s: provider name */
