@@ -1,0 +1,36 @@
+{
+  "name": "my-own-cdn",
+  "description": "MyOwnCDN: CDN made simple",
+  "version": "1.0.0",
+  "main": "my-own-cdn.php",
+  "author": "vCore Digital",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "cdn",
+    "fastly",
+    "bunny.net",
+    "cachefly"
+  ],
+  "scripts": {
+    "build": "webpack --mode=production --progress",
+    "translate": "wp i18n make-pot . languages/my-own-cdn.pot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vcore-digital/my-own-cdn.git"
+  },
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^21.4.0",
+    "@wordpress/prettier-config": "^4.11.0",
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.2",
+    "prettier": "^3.3.3",
+    "sass": "^1.81.0",
+    "sass-loader": "^16.0.3",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "browserslist": [ "last 2 versions" ],
+  "prettier": "@wordpress/prettier-config"
+}

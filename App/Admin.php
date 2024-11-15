@@ -30,7 +30,7 @@ class Admin {
 
 		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_init', array( $this, 'load_plugin_textdomain' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
 		add_filter( 'plugin_action_links_my-own-cdn/my-own-cdn.php', array( $this, 'settings_link' ) );
 	}
@@ -66,13 +66,13 @@ class Admin {
 	}
 
 	/**
-	 * Load plugin styles.
+	 * Load plugin styles and scripts.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $hook The current admin page.
 	 */
-	public function enqueue_styles( string $hook ): void {
+	public function enqueue_assets( string $hook ): void {
 		// Run only on plugin pages.
 		if ( 'toplevel_page_my-own-cdn' !== $hook ) {
 			return;
@@ -80,9 +80,17 @@ class Admin {
 
 		wp_enqueue_style(
 			$this->get_slug(),
-			MY_OWN_CDN_URL . 'assets/styles.css',
+			MY_OWN_CDN_URL . 'assets/css/moc.min.css',
 			array(),
 			VERSION
+		);
+
+		wp_enqueue_script(
+			$this->get_slug(),
+			MY_OWN_CDN_URL . 'assets/js/moc.min.js',
+			array(),
+			VERSION,
+			true
 		);
 	}
 
