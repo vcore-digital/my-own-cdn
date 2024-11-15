@@ -10,6 +10,7 @@
 
 namespace MyOwnCDN;
 
+use MyOwnCDN\Models\CDN;
 use MyOwnCDN\Traits\HasRegex;
 
 /**

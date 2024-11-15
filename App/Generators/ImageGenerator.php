@@ -8,7 +8,7 @@
 
 namespace MyOwnCDN\Generators;
 
-use MyOwnCDN\CDN;
+use MyOwnCDN\Models\CDN;
 use MyOwnCDN\Traits\HasRegex;
 
 /**

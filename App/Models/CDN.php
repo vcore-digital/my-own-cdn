@@ -6,7 +6,7 @@
  * @package MyOwnCDN
  */
 
-namespace MyOwnCDN;
+namespace MyOwnCDN\Models;
 
 use MyOwnCDN\Generators\ImageGenerator;
 use MyOwnCDN\Generators\URLGenerator;
