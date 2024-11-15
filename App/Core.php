@@ -49,8 +49,7 @@ class Core {
 	 * @since 1.0.0
 	 */
 	public function run() {
-		// Init admin functionality.
-		// Init frontend functionality.
+		new Admin();
 
 		$parser = new Parser();
 		$parser->init();

@@ -72,7 +72,7 @@ class Parser {
 		}
 
 		foreach ( $images[0] as $key => $image_dom ) {
-			$image = Image::element()
+			$image = CDN::image()
 				->dom( $image_dom )
 				->src( $images[1][ $key ] )
 				->srcset( $images[2][ $key ] );

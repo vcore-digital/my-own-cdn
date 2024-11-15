@@ -8,6 +8,7 @@
 
 namespace MyOwnCDN;
 
+use MyOwnCDN\Generators\ImageGenerator;
 use MyOwnCDN\Generators\URLGenerator;
 
 /**
@@ -23,5 +24,16 @@ class CDN {
 	 */
 	public static function url(): URLGenerator {
 		return new URLGenerator();
+	}
+
+	/**
+	 * Generate an image element object.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return ImageGenerator
+	 */
+	public static function image(): ImageGenerator {
+		return new ImageGenerator();
 	}
 }

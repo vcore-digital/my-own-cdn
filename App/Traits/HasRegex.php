@@ -8,6 +8,9 @@
 
 namespace MyOwnCDN\Traits;
 
+/**
+ * HasRegex trait.
+ */
 trait HasRegex {
 	/**
 	 * Regex to get content from the body tag.
