@@ -42,8 +42,8 @@ class Admin {
 	 */
 	public function add_menu(): void {
 		add_menu_page(
-			'My Own CDN',
-			'My Own CDN',
+			'MyOwnCDN',
+			'MyOwnCDN',
 			'manage_options',
 			$this->get_slug(),
 			array( $this, 'render_page' ),
