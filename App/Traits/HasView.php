@@ -23,7 +23,7 @@ trait HasView {
 			if ( User::has_api_token() ) {
 				$view = 'setup';
 			} else {
-				$view = 'login';
+				$view = 'api-key';
 			}
 		}
 

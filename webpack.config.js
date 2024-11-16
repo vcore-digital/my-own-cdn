@@ -6,7 +6,7 @@ module.exports = {
 	mode: 'production',
 
 	entry: {
-		moc: path.resolve(__dirname, 'assets/_src/admin.js'),
+		moc: path.resolve(__dirname, 'assets/_src/scripts/admin.js'),
 	},
 
 	output: {

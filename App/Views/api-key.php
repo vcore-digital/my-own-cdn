@@ -32,32 +32,39 @@ if ( ! defined( 'WPINC' ) ) {
 
 	<p>
 		<?php
-		printf( /* translators: %1$s - opening <a> tag for API key, %2$s - opening <a> tag for login, %3$s - closing </a> tag */
-			esc_html__( "Don't have an API key? %1\$sGenerate%3\$s a key in your account or %2\$slogin%3\$s and we'll automatically generate one for you.", 'my-own-cdn' ),
+		printf( /* translators: %1$s - opening <a> tag for API key, %2$s - closing </a> tag */
+			esc_html__( "Don't have an API token? %1\$sGenerate%2\$s a key in your account.", 'my-own-cdn' ),
 			'<a href="' . esc_url( $this->get_url( 'site-login' ) ) . '" target="_blank">',
-			'<a href="' . esc_url( $this->get_url( 'login' ) ) . '">',
 			'</a>'
 		);
 		?>
 	</p>
 
+	<div class="notice notice-error" id="moc-ajax-notice">
+		<p></p>
+	</div>
+
 	<hr>
 
-	<table class="form-table" id="moc-api-key-form" role="presentation">
-		<tbody>
-		<tr>
-			<th scope="row">
-				<label for="api-key"><?php esc_html_e( 'API token', 'my-own-cdn' ); ?></label>
-			</th>
-			<td>
-				<input type="text" id="api-key" name="api-key" placeholder="<?php esc_attr_e( 'API token', 'my-own-cdn' ); ?>" required>
-				<button type="submit" id="moc-login-btn" class="button button-primary">
-					<?php esc_html_e( 'Login', 'my-own-cdn' ); ?>
-				</button>
-			</td>
-		</tr>
-		</tbody>
-	</table>
+	<form id="moc-api-key-form">
+		<table class="form-table" role="presentation">
+			<tbody>
+			<tr>
+				<th scope="row">
+					<label for="api-key"><?php esc_html_e( 'API token', 'my-own-cdn' ); ?></label>
+				</th>
+				<td>
+					<input type="text" id="api-key" name="api-key" placeholder="<?php esc_attr_e( 'API token', 'my-own-cdn' ); ?>" required>
+					<button type="submit" id="moc-save-btn" class="button button-primary">
+						<?php esc_html_e( 'Save', 'my-own-cdn' ); ?>
+					</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+
+	<a href="<?php echo esc_url( $this->get_url( 'register' ) ); ?>" target="_blank"><?php esc_html_e( 'Create an account', 'my-own-cdn' ); ?></a>
 </div>
 
 <div class="clear"></div>

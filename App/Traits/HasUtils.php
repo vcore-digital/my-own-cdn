@@ -36,8 +36,6 @@ trait HasUtils {
 		switch ( $page ) {
 			case 'api-key':
 				return menu_page_url( $this->get_slug(), false ) . '&view=api-key';
-			case 'login':
-				return menu_page_url( $this->get_slug(), false ) . '&view=login';
 			case 'register':
 				return 'https://myowncdn.com/register';
 			case 'site-login':

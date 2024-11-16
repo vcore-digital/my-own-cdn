@@ -8,6 +8,9 @@
 
 namespace MyOwnCDN;
 
+use Exception;
+use MyOwnCDN\Api\API;
+use MyOwnCDN\Models\User;
 use MyOwnCDN\Traits\HasUtils;
 use MyOwnCDN\Traits\HasView;
 
@@ -17,6 +20,14 @@ use MyOwnCDN\Traits\HasView;
 class Admin {
 	use HasView;
 	use HasUtils;
+
+	/**
+	 * API instance.
+	 *
+	 * @since 1.0.0
+	 * @var API $api API instance.
+	 */
+	protected API $api;
 
 	/**
 	 * Class constructor.
@@ -33,6 +44,11 @@ class Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
 		add_filter( 'plugin_action_links_my-own-cdn/my-own-cdn.php', array( $this, 'settings_link' ) );
+
+		if ( wp_doing_ajax() ) {
+			$this->api = new API();
+			add_action( 'wp_ajax_moc_update_key', array( $this, 'update_key' ) );
+		}
 	}
 
 	/**
@@ -92,6 +108,17 @@ class Admin {
 			VERSION,
 			true
 		);
+
+		wp_localize_script(
+			$this->get_slug(),
+			'MOCJS',
+			array(
+				'links' => array(
+					'pluginURL' => $this->get_url(),
+				),
+				'nonce' => wp_create_nonce( 'my-own-cdn' ),
+			)
+		);
 	}
 
 	/**
@@ -129,5 +156,43 @@ class Admin {
 			),
 			$actions
 		);
+	}
+
+	/**
+	 * Update API token.
+	 *
+	 * @since 1.0.0
+	 */
+	public function update_key(): void {
+		$this->check_permissions();
+
+		$token = filter_input( INPUT_POST, 'token', FILTER_UNSAFE_RAW );
+		$token = sanitize_text_field( $token );
+		User::set_token( $token );
+
+		try {
+			$response = $this->api->login();
+			wp_send_json_success( $response );
+		} catch ( Exception $e ) {
+			User::delete_token();
+			wp_send_json_error( $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Check request permissions.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $type Capability to check.
+	 *
+	 * @return void
+	 */
+	private function check_permissions( string $type = 'manage_options' ) {
+		check_ajax_referer( 'my-own-cdn' );
+
+		if ( ! current_user_can( $type ) ) {
+			wp_send_json_error( esc_html__( 'Insufficient permissions', 'my-own-cdn' ) );
+		}
 	}
 }

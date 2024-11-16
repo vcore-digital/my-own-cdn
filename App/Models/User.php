@@ -24,6 +24,15 @@ class User {
 	}
 
 	/**
+	 * Remove API token.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function delete_token(): void {
+		delete_option( 'moc-api-token' );
+	}
+
+	/**
 	 * Get API token value.
 	 *
 	 * @since 1.0.0
