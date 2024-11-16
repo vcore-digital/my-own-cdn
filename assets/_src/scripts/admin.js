@@ -24,6 +24,18 @@ class MOC {
 			this.processApiKeyForm = this.processApiKeyForm.bind(this);
 			apiKeyForm.addEventListener('submit', this.processApiKeyForm);
 		}
+
+		const setupForm = document.getElementById('moc-provider-form');
+		if (setupForm) {
+			this.processSetupForm = this.processSetupForm.bind(this);
+			setupForm.addEventListener('submit', this.processSetupForm);
+		}
+
+		const logoutButton = document.getElementById('moc-logout-btn');
+		if (logoutButton) {
+			this.logout = this.logout.bind(this);
+			logoutButton.addEventListener('click', this.logout);
+		}
 	}
 
 	/**
@@ -56,6 +68,25 @@ class MOC {
 			.finally(() => {
 				submitButton.setAttribute('aria-busy', 'false');
 			});
+	}
+
+	/**
+	 * Process provider setup form.
+	 */
+	processSetupForm(e) {}
+
+	/**
+	 * Logout.
+	 */
+	logout(e) {
+		e.preventDefault();
+
+		this.api
+			.post('moc_logout')
+			.then(() => {
+				window.location.href = getLink('pluginURL');
+			})
+			.catch(console.log);
 	}
 
 	/**

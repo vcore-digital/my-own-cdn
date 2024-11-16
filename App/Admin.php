@@ -48,6 +48,7 @@ class Admin {
 		if ( wp_doing_ajax() ) {
 			$this->api = new API();
 			add_action( 'wp_ajax_moc_update_key', array( $this, 'update_key' ) );
+			add_action( 'wp_ajax_moc_logout', array( $this, 'logout' ) );
 		}
 	}
 
@@ -177,6 +178,19 @@ class Admin {
 			User::delete_token();
 			wp_send_json_error( $e->getMessage() );
 		}
+	}
+
+	/**
+	 * Logout.
+	 *
+	 * @since 1.0.0
+	 */
+	public function logout(): void {
+		$this->check_permissions();
+
+		delete_option( 'moc-api-token' );
+
+		wp_send_json_success();
 	}
 
 	/**

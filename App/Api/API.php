@@ -20,6 +20,19 @@ use stdClass;
  */
 class API extends Request {
 	/**
+	 * Get URL parameters.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+	private function get_url_params(): array {
+		return array(
+			'site' => site_url(),
+		);
+	}
+
+	/**
 	 * Test API token endpoint.
 	 *
 	 * @since 1.0.0
@@ -28,9 +41,9 @@ class API extends Request {
 	 * @throws Exception API issues.
 	 */
 	public function login(): stdClass {
-		$this->set_method( 'GET' );
-		$this->set_endpoint( 'user' );
+		$this->set_method( 'POST' );
+		$this->set_endpoint( 'status' );
 
-		return $this->process_response( $this->request() );
+		return $this->process_response( $this->request( $this->get_url_params() ) );
 	}
 }

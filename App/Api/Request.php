@@ -26,7 +26,7 @@ abstract class Request {
 	 * @since 1.0.0
 	 * @var string $api_url API URL.
 	 */
-	protected string $api_url = 'https://myowncdn.com/api/';
+	protected string $api_url = 'https://myowncdn.com/api/cdn/';
 
 	/**
 	 * Endpoint for API call.

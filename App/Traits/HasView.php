@@ -20,11 +20,7 @@ trait HasView {
 		$view = $this->get_view();
 
 		if ( empty( $view ) ) {
-			if ( User::has_api_token() ) {
-				$view = 'setup';
-			} else {
-				$view = 'api-key';
-			}
+			$view = User::has_api_token() ? 'setup' : 'token';
 		}
 
 		$this->view( $view );
@@ -33,7 +29,7 @@ trait HasView {
 	/**
 	 * Load an admin view.
 	 *
-	 * @param string $file  View file name.
+	 * @param string $file View file name.
 	 *
 	 * @return void
 	 */
