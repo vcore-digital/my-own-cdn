@@ -14,7 +14,6 @@ if ( ! defined( 'WPINC' ) ) {
 
 ?>
 
-
 <div class="moc-header">
 	<div class="moc-title-section">
 		<h1><?php esc_html_e( 'MyOwnCDN', 'my-own-cdn' ); ?></h1>

@@ -12,7 +12,7 @@ import { getLink } from './modules/utils';
  *
  * @since 1.0.0
  */
-export default class MOC {
+class MOC {
 	/**
 	 * Class constructor.
 	 */
