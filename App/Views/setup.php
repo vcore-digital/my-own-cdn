@@ -46,17 +46,37 @@ if ( ! defined( 'WPINC' ) ) {
 				</th>
 				<td>
 					<select name="provider" id="provider">
-						<option value="0" <?php selected( CDN::get_provider(), '' ); ?>>— <?php esc_html_e( 'Select', 'my-own-cdn' ); ?> —</option>
-						<option class="level-0" value="bunny" <?php selected( CDN::get_provider(), 'bunny' ); ?>>Bunny.net</option>
-						<option class="level-0" value="cachefly" <?php selected( CDN::get_provider(), 'cachefly' ); ?>>CacheFly</option>
-						<option class="level-0" value="fastly" <?php selected( CDN::get_provider(), 'fastly' ); ?>>Fastly</option>
-						<option class="level-0" value="gcore" <?php selected( CDN::get_provider(), 'gcore' ); ?>>Gcore</option>
+						<option value="0" <?php selected( $this->get_setting( 'provider' ), '' ); ?>>— <?php esc_html_e( 'Select', 'my-own-cdn' ); ?> —</option>
+						<option class="level-0" value="bunny" <?php selected( $this->get_setting( 'provider' ), 'bunny' ); ?>>Bunny.net</option>
+						<option class="level-0" value="cachefly" <?php selected( $this->get_setting( 'provider' ), 'cachefly' ); ?>>CacheFly</option>
+						<option class="level-0" value="fastly" <?php selected( $this->get_setting( 'provider' ), 'fastly' ); ?>>Fastly</option>
+						<option class="level-0" value="gcore" <?php selected( $this->get_setting( 'provider' ), 'gcore' ); ?>>Gcore</option>
 					</select>
 					<button type="submit" id="moc-provider-btn" class="button button-primary">
 						<?php esc_html_e( 'Select Provider', 'my-own-cdn' ); ?>
 					</button>
 				</td>
 			</tr>
+			<?php if ( ! empty( $this->get_setting( 'provider' ) ) ) : ?>
+				<tr>
+					<th scope="row">
+						<?php esc_html_e( 'Status', 'my-own-cdn' ); ?>
+					</th>
+					<td>
+						<?php echo esc_html( CDN::status()->message() ); ?>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<?php esc_html_e( 'Cache control', 'my-own-cdn' ); ?>
+					</th>
+					<td>
+						<button type="button" id="moc-clear-cache" class="button">
+							<?php esc_html_e( 'Clear Cache', 'my-own-cdn' ); ?>
+						</button>
+					</td>
+				</tr>
+			<?php endif; ?>
 			</tbody>
 		</table>
 	</form>
@@ -67,9 +87,9 @@ if ( ! defined( 'WPINC' ) ) {
 
 <div class="moc-footer">
 	<p>
-		<a href="#" id="moc-logout-btn">
-			<?php esc_html_e( 'Disconnect', 'my-own-cdn' ); ?>
-		</a>
+		<a href="#" id="moc-logout-btn"><?php esc_html_e( 'Disconnect', 'my-own-cdn' ); ?></a>
+		&nbsp;|&nbsp;
+		<a href="#" id="moc-status-refresh"><?php esc_html_e( 'Refresh status', 'my-own-cdn' ); ?></a>
 	</p>
 </div>
 

@@ -10,8 +10,8 @@ namespace MyOwnCDN;
 
 use Exception;
 use MyOwnCDN\Api\API;
-use MyOwnCDN\Models\CDN;
 use MyOwnCDN\Models\User;
+use MyOwnCDN\Traits\HasSettings;
 use MyOwnCDN\Traits\HasUtils;
 use MyOwnCDN\Traits\HasView;
 
@@ -19,8 +19,9 @@ use MyOwnCDN\Traits\HasView;
  * Admin class.
  */
 class Admin {
-	use HasView;
+	use HasSettings;
 	use HasUtils;
+	use HasView;
 
 	/**
 	 * API instance.
@@ -176,7 +177,11 @@ class Admin {
 			$response = $this->api->login();
 
 			if ( ! empty( $response->provider ) ) {
-				CDN::set_provider( $response->provider );
+				$this->set_setting( 'provider', $response->provider );
+			}
+
+			if ( ! empty( $response->status ) ) {
+				$this->set_setting( 'status', $response->status );
 			}
 
 			wp_send_json_success( $response );
