@@ -11,7 +11,7 @@
  * Plugin URI:        https://myowncdn.com
  * Description:       CDN made simple for effortless performance.
  * Version:           1.0.0
- * Author:            Anton Vanyukov
+ * Author:            vCore Digital
  * Author URI:        https://vcore.au
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
