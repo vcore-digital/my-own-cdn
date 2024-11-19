@@ -87,9 +87,9 @@ if ( ! defined( 'WPINC' ) ) {
 
 <div class="moc-footer">
 	<p>
-		<a href="#" id="moc-logout-btn"><?php esc_html_e( 'Disconnect', 'my-own-cdn' ); ?></a>
+		<button class="button-link" id="moc-logout-btn"><?php esc_html_e( 'Disconnect', 'my-own-cdn' ); ?></button>
 		&nbsp;|&nbsp;
-		<a href="#" id="moc-status-refresh"><?php esc_html_e( 'Refresh status', 'my-own-cdn' ); ?></a>
+		<button class="button-link" id="moc-status-btn"><?php esc_html_e( 'Refresh status', 'my-own-cdn' ); ?></button>
 	</p>
 </div>
 

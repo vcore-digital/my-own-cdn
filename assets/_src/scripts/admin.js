@@ -4,8 +4,9 @@
  * Internal dependencies
  */
 import '../styles/admin.scss';
-import API from './modules/api';
-import { getLink } from './modules/utils';
+import { login } from './actions/login';
+import { logout } from './actions/logout';
+import { status } from './actions/status';
 
 /**
  * MOC class.
@@ -17,90 +18,33 @@ class MOC {
 	 * Class constructor.
 	 */
 	constructor() {
-		this.api = new API();
-
-		const apiKeyForm = document.getElementById('moc-api-key-form');
-		if (apiKeyForm) {
-			this.processApiKeyForm = this.processApiKeyForm.bind(this);
-			apiKeyForm.addEventListener('submit', this.processApiKeyForm);
-		}
-
-		const setupForm = document.getElementById('moc-provider-form');
-		if (setupForm) {
-			this.processSetupForm = this.processSetupForm.bind(this);
-			setupForm.addEventListener('submit', this.processSetupForm);
-		}
-
-		const logoutButton = document.getElementById('moc-logout-btn');
-		if (logoutButton) {
-			this.logout = this.logout.bind(this);
-			logoutButton.addEventListener('click', this.logout);
-		}
+		this.bindEvents();
 	}
 
 	/**
-	 * Process API token form.
+	 * Binds event listeners to DOM elements.
+	 */
+	bindEvents() {
+		this.addEventListener('moc-api-key-form', 'submit', login);
+		this.addEventListener('moc-logout-btn', 'click', logout);
+		this.addEventListener('moc-status-btn', 'click', status);
+	}
+
+	/**
+	 * Adds an event listener to a DOM element if it exists.
 	 *
-	 * @since 1.0.0
+	 * @param {string}   elementId The ID of the DOM element.
+	 * @param {string}   eventType The event type (e.g., 'click').
+	 * @param {Function} callback  The event callback function.
 	 */
-	processApiKeyForm(e) {
-		e.preventDefault();
-
-		this.removeFormErrors();
-
-		const submitButton = document.getElementById('moc-save-btn');
-		submitButton.setAttribute('aria-busy', 'true');
-
-		const data = {
-			token: document.getElementById('api-key').value,
-		};
-
-		this.api
-			.post('moc_update_key', data)
-			.then((response) => {
-				if (!this.api.processResponse(response)) {
-					return;
-				}
-
-				window.location.href = getLink('pluginURL');
-			})
-			.catch(console.log)
-			.finally(() => {
-				submitButton.setAttribute('aria-busy', 'false');
-			});
-	}
-
-	/**
-	 * Process provider setup form.
-	 */
-	processSetupForm(e) {}
-
-	/**
-	 * Logout.
-	 */
-	logout(e) {
-		e.preventDefault();
-
-		this.api
-			.post('moc_logout')
-			.then(() => {
-				window.location.href = getLink('pluginURL');
-			})
-			.catch(console.log);
-	}
-
-	/**
-	 * Remove form errors and hide notices.
-	 *
-	 * @since 1.0.0
-	 */
-	removeFormErrors() {
-		document
-			.querySelectorAll('.moc-ajax-error')
-			.forEach((element) => element.remove());
-		document.getElementById('moc-ajax-notice').style.display = 'none';
+	addEventListener(elementId, eventType, callback) {
+		const element = document.getElementById(elementId);
+		if (element) {
+			element.addEventListener(eventType, callback);
+		}
 	}
 }
 
-const MyOwnCDN = new MOC();
-window.MyOwnCDN = MyOwnCDN;
+document.addEventListener('DOMContentLoaded', () => {
+	window.MyOwnCDN = new MOC();
+});

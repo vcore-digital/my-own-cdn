@@ -51,6 +51,7 @@ class Admin {
 			$this->api = new API();
 			add_action( 'wp_ajax_moc_update_key', array( $this, 'update_key' ) );
 			add_action( 'wp_ajax_moc_logout', array( $this, 'logout' ) );
+			add_action( 'wp_ajax_moc_update_status', array( $this, 'update_status' ) );
 		}
 	}
 
@@ -116,6 +117,10 @@ class Admin {
 			$this->get_slug(),
 			'MOCJS',
 			array(
+				'i18n'  => array(
+					'refreshStatus' => esc_html__( 'Refresh status', 'my-own-cdn' ),
+					'updating'      => esc_html__( 'Updating...', 'my-own-cdn' ),
+				),
 				'links' => array(
 					'pluginURL' => $this->get_url(),
 				),
@@ -174,7 +179,7 @@ class Admin {
 		User::set_token( $token );
 
 		try {
-			$response = $this->api->login();
+			$response = $this->api->status();
 
 			if ( ! empty( $response->provider ) ) {
 				$this->set_setting( 'provider', $response->provider );
@@ -187,6 +192,31 @@ class Admin {
 			wp_send_json_success( $response );
 		} catch ( Exception $e ) {
 			User::delete_token();
+			wp_send_json_error( $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Update status.
+	 *
+	 * @since 1.0.0
+	 */
+	public function update_status(): void {
+		$this->check_permissions();
+
+		try {
+			$response = $this->api->status();
+
+			if ( ! empty( $response->provider ) ) {
+				$this->set_setting( 'provider', $response->provider );
+			}
+
+			if ( ! empty( $response->status ) ) {
+				$this->set_setting( 'status', $response->status );
+			}
+
+			wp_send_json_success( $response );
+		} catch ( Exception $e ) {
 			wp_send_json_error( $e->getMessage() );
 		}
 	}

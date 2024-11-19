@@ -33,14 +33,14 @@ class API extends Request {
 	}
 
 	/**
-	 * Test API token endpoint.
+	 * Get status.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return stdClass
 	 * @throws Exception API issues.
 	 */
-	public function login(): stdClass {
+	public function status(): stdClass {
 		$this->set_method( 'POST' );
 		$this->set_endpoint( 'status' );
 
