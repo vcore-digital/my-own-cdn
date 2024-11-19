@@ -12,7 +12,6 @@
  * Description:       CDN made simple for effortless performance.
  * Version:           1.0.0
  * Author:            MyOwnCDN
- * Author URI:        https://myowncdn.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       my-own-cdn
