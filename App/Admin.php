@@ -10,6 +10,7 @@ namespace MyOwnCDN;
 
 use Exception;
 use MyOwnCDN\Api\API;
+use MyOwnCDN\Models\CDN;
 use MyOwnCDN\Models\User;
 use MyOwnCDN\Traits\HasUtils;
 use MyOwnCDN\Traits\HasView;
@@ -173,6 +174,11 @@ class Admin {
 
 		try {
 			$response = $this->api->login();
+
+			if ( ! empty( $response->provider ) ) {
+				CDN::set_provider( $response->provider );
+			}
+
 			wp_send_json_success( $response );
 		} catch ( Exception $e ) {
 			User::delete_token();

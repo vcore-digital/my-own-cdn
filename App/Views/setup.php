@@ -8,6 +8,8 @@
 
 namespace MyOwnCDN\Views;
 
+use MyOwnCDN\Models\CDN;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -44,11 +46,11 @@ if ( ! defined( 'WPINC' ) ) {
 				</th>
 				<td>
 					<select name="provider" id="provider">
-						<option value="0" selected="selected">— <?php esc_html_e( 'Select', 'my-own-cdn' ); ?> —</option>
-						<option class="level-0" value="bunny">Bunny.net</option>
-						<option class="level-0" value="cachefly">CacheFly</option>
-						<option class="level-0" value="fastly">Fastly</option>
-						<option class="level-0" value="gcore">Gcore</option>
+						<option value="0" <?php selected( CDN::get_provider(), '' ); ?>>— <?php esc_html_e( 'Select', 'my-own-cdn' ); ?> —</option>
+						<option class="level-0" value="bunny" <?php selected( CDN::get_provider(), 'bunny' ); ?>>Bunny.net</option>
+						<option class="level-0" value="cachefly" <?php selected( CDN::get_provider(), 'cachefly' ); ?>>CacheFly</option>
+						<option class="level-0" value="fastly" <?php selected( CDN::get_provider(), 'fastly' ); ?>>Fastly</option>
+						<option class="level-0" value="gcore" <?php selected( CDN::get_provider(), 'gcore' ); ?>>Gcore</option>
 					</select>
 					<button type="submit" id="moc-provider-btn" class="button button-primary">
 						<?php esc_html_e( 'Select Provider', 'my-own-cdn' ); ?>
