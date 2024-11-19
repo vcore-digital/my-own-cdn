@@ -7,6 +7,7 @@ import '../styles/admin.scss';
 import { login } from './actions/login';
 import { logout } from './actions/logout';
 import { status } from './actions/status';
+import { cache } from './actions/cache';
 
 /**
  * MOC class.
@@ -28,6 +29,7 @@ class MOC {
 		this.addEventListener('moc-api-key-form', 'submit', login);
 		this.addEventListener('moc-logout-btn', 'click', logout);
 		this.addEventListener('moc-status-btn', 'click', status);
+		this.addEventListener('moc-clear-cache', 'click', cache);
 	}
 
 	/**

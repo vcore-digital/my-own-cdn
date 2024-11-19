@@ -52,6 +52,7 @@ class Admin {
 			add_action( 'wp_ajax_moc_update_key', array( $this, 'update_key' ) );
 			add_action( 'wp_ajax_moc_logout', array( $this, 'logout' ) );
 			add_action( 'wp_ajax_moc_update_status', array( $this, 'update_status' ) );
+			add_action( 'wp_ajax_moc_clear_cache', array( $this, 'clear_cache' ) );
 		}
 	}
 
@@ -118,6 +119,9 @@ class Admin {
 			'MOCJS',
 			array(
 				'i18n'  => array(
+					'cacheCleared'  => esc_html__( 'Cache cleared', 'my-own-cdn' ),
+					'clearCache'    => esc_html__( 'Clear Cache', 'my-own-cdn' ),
+					'clearingCache' => esc_html__( 'Clearing cache...', 'my-own-cdn' ),
 					'refreshStatus' => esc_html__( 'Refresh status', 'my-own-cdn' ),
 					'updating'      => esc_html__( 'Updating...', 'my-own-cdn' ),
 				),
@@ -214,6 +218,23 @@ class Admin {
 			if ( ! empty( $response->status ) ) {
 				$this->set_setting( 'status', $response->status );
 			}
+
+			wp_send_json_success( $response );
+		} catch ( Exception $e ) {
+			wp_send_json_error( $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Clear cache.
+	 *
+	 * @since 1.0.0
+	 */
+	public function clear_cache(): void {
+		$this->check_permissions();
+
+		try {
+			$response = $this->api->clear_cache();
 
 			wp_send_json_success( $response );
 		} catch ( Exception $e ) {

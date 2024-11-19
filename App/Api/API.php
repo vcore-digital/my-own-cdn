@@ -46,4 +46,19 @@ class API extends Request {
 
 		return $this->process_response( $this->request( $this->get_url_params() ) );
 	}
+
+	/**
+	 * Clear cache.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return stdClass
+	 * @throws Exception API issues.
+	 */
+	public function clear_cache(): stdClass {
+		$this->set_method( 'DELETE' );
+		$this->set_endpoint( 'cache' );
+
+		return $this->process_response( $this->request( $this->get_url_params() ) );
+	}
 }

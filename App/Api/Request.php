@@ -167,6 +167,8 @@ abstract class Request {
 			$response = wp_remote_get( $url, $args );
 		} elseif ( 'POST' === $args['method'] ) {
 			$response = wp_remote_post( $url, $args );
+		} elseif ( 'DELETE' === $args['method'] ) {
+			$response = wp_remote_request( $url, $args );
 		} else {
 			throw new Exception( esc_html__( 'Unsupported API call method', 'my-own-cdn' ) );
 		}
