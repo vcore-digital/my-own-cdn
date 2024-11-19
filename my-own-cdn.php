@@ -7,7 +7,7 @@
  * @package           MyOwnCDN
  *
  * @wordpress-plugin
- * Plugin Name:       My Own CDN
+ * Plugin Name:       MyOwnCDN: CDN made simple
  * Plugin URI:        https://myowncdn.com
  * Description:       CDN made simple for effortless performance.
  * Version:           1.0.0
