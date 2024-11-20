@@ -11,6 +11,7 @@
 namespace MyOwnCDN\Api;
 
 use Exception;
+use MyOwnCDN\Responses\StatusResponse;
 use stdClass;
 
 /**
@@ -37,14 +38,20 @@ class API extends Request {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return stdClass
+	 * @return StatusResponse
 	 * @throws Exception API issues.
 	 */
-	public function status(): stdClass {
+	public function status(): StatusResponse {
 		$this->set_method( 'POST' );
 		$this->set_endpoint( 'status' );
 
-		return $this->process_response( $this->request( $this->get_url_params() ) );
+		$response = $this->process_response( $this->request( $this->get_url_params() ) );
+
+		return new StatusResponse(
+			$response->provider ?? '',
+			$response->status ?? '',
+			$response->zone ?? '',
+		);
 	}
 
 	/**
