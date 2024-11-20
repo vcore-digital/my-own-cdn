@@ -21,6 +21,7 @@ trait HasSettings {
 	private array $settings = array(
 		'provider' => '',
 		'status'   => '',
+		'zone'     => '',
 	);
 
 	/**

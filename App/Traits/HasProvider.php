@@ -29,13 +29,13 @@ trait HasProvider {
 	 * @since 1.0.0
 	 *
 	 * @param string $provider Provider name.
-	 * @param string $type     Asset type.
+	 * @param string $zone     CDN zone.
 	 *
 	 * @return URLGenerator|HasProvider
 	 */
-	public function using( string $provider, string $type ): self {
+	public function using( string $provider, string $zone ): self {
 		$this->provider = ( new Manager() )->resolve( $provider );
-		$this->provider->set_type( $type );
+		$this->provider->set_zone( $zone );
 
 		return $this;
 	}

@@ -8,7 +8,6 @@
 
 namespace MyOwnCDN\Models;
 
-use MyOwnCDN\Generators\ImageGenerator;
 use MyOwnCDN\Generators\StatusGenerator;
 use MyOwnCDN\Generators\URLGenerator;
 
@@ -25,19 +24,6 @@ class CDN {
 	 */
 	public static function url(): URLGenerator {
 		return new URLGenerator();
-	}
-
-	/**
-	 * Generate an image element object.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $provider Image provider.
-	 *
-	 * @return ImageGenerator
-	 */
-	public static function image( string $provider ): ImageGenerator {
-		return new ImageGenerator( $provider );
 	}
 
 	/**
