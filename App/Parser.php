@@ -12,12 +12,14 @@ namespace MyOwnCDN;
 
 use MyOwnCDN\Models\CDN;
 use MyOwnCDN\Traits\HasRegex;
+use MyOwnCDN\Traits\HasSettings;
 
 /**
  * Parser class.
  */
 class Parser {
 	use HasRegex;
+	use HasSettings;
 
 	/**
 	 * Init the module.
@@ -66,14 +68,15 @@ class Parser {
 	 * @return string
 	 */
 	public function replace_images( string $buffer ): string {
-		$images = $this->get_images( $buffer );
+		$images   = $this->get_images( $buffer );
+		$provider = $this->get_setting( 'provider' );
 
-		if ( empty( $images ) ) {
+		if ( empty( $images ) || empty( $provider ) ) {
 			return $buffer;
 		}
 
 		foreach ( $images[0] as $key => $image_dom ) {
-			$image = CDN::image()
+			$image = CDN::image( $provider )
 				->dom( $image_dom )
 				->src( $images[1][ $key ] )
 				->srcset( $images[2][ $key ] );

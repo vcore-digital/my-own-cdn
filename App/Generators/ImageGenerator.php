@@ -54,6 +54,26 @@ class ImageGenerator {
 	protected string $processed = '';
 
 	/**
+	 * Selected provider.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected string $provider = '';
+
+	/**
+	 * Class constructor.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $provider Image provider.
+	 */
+	public function __construct( string $provider ) {
+		$this->provider = $provider;
+	}
+
+	/**
 	 * Set the DOM element for the image.
 	 *
 	 * @since 1.0.0
@@ -138,8 +158,7 @@ class ImageGenerator {
 			return;
 		}
 
-		// TODO: get the provider from the settings.
-		$generator = CDN::url()->using( 'bunny', 'image' );
+		$generator = CDN::url()->using( $this->provider, 'image' );
 
 		foreach ( $urls[0] as $link ) {
 			$src = $generator->origin( $link )()->url;

@@ -32,10 +32,12 @@ class CDN {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param string $provider Image provider.
+	 *
 	 * @return ImageGenerator
 	 */
-	public static function image(): ImageGenerator {
-		return new ImageGenerator();
+	public static function image( string $provider ): ImageGenerator {
+		return new ImageGenerator( $provider );
 	}
 
 	/**
