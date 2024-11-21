@@ -12,7 +12,6 @@ namespace MyOwnCDN;
 
 use InvalidArgumentException;
 use MyOwnCDN\Contracts\Provider;
-use MyOwnCDN\Providers;
 
 /**
  * Manager class.
