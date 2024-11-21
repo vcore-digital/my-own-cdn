@@ -12,7 +12,7 @@ namespace MyOwnCDN;
 
 use InvalidArgumentException;
 use MyOwnCDN\Contracts\Provider;
-use MyOwnCDN\Providers\Bunny;
+use MyOwnCDN\Providers;
 
 /**
  * Manager class.
@@ -26,7 +26,10 @@ class Manager {
 	 * @var array()
 	 */
 	private array $providers = array(
-		'bunny' => Bunny::class,
+		'bunny'    => Providers\Bunny::class,
+		'cachefly' => Providers\CacheFly::class,
+		'fastly'   => Providers\Fastly::class,
+		'gcore'    => Providers\Gcore::class,
 	);
 
 	/**
