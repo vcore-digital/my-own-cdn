@@ -200,15 +200,21 @@ class Admin {
 	 * @since 1.0.0
 	 */
 	public function update_status(): void {
-		$this->check_permissions();
+		if ( ! wp_doing_cron() ) {
+			$this->check_permissions();
+		}
 
 		try {
 			$response = $this->api->status();
 			$this->save_status( $response );
 
-			wp_send_json_success( $response );
+			if ( ! wp_doing_cron() ) {
+				wp_send_json_success( $response );
+			}
 		} catch ( Exception $e ) {
-			wp_send_json_error( $e->getMessage() );
+			if ( ! wp_doing_cron() ) {
+				wp_send_json_error( $e->getMessage() );
+			}
 		}
 	}
 

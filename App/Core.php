@@ -41,7 +41,9 @@ class Core {
 	 *
 	 * @since 1.0.0
 	 */
-	private function __construct() {}
+	private function __construct() {
+		add_action( 'admin_init', array( $this, 'set_cron_schedule' ) );
+	}
 
 	/**
 	 * Run the plugin.
@@ -49,9 +51,32 @@ class Core {
 	 * @since 1.0.0
 	 */
 	public function run() {
-		new Admin();
+		$admin = new Admin();
+
+		add_action( 'my_own_cdn_status', array( $admin, 'update_status' ) );
 
 		$parser = new Parser();
 		$parser->init();
+	}
+
+	/**
+	 * Remove scheduled cron event.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function remove_cron() {
+		$timestamp = wp_next_scheduled( 'my_own_cdn_status' );
+		wp_unschedule_event( $timestamp, 'my_own_cdn_status' );
+	}
+
+	/**
+	 * Schedule a cron to make sure that CDN is always synced with the API.
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_cron_schedule() {
+		if ( ! wp_next_scheduled( 'my_own_cdn_status' ) ) {
+			wp_schedule_event( time() + DAY_IN_SECONDS, 'daily', 'my_own_cdn_status' );
+		}
 	}
 }
