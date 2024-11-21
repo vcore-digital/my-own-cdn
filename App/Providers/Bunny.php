@@ -10,21 +10,21 @@ use MyOwnCDN\Responses\ProviderResponse;
  */
 class Bunny implements Provider {
 	/**
-	 * The asset type.
+	 * CDN zone.
 	 *
 	 * @var string
 	 */
-	protected string $type;
+	protected string $zone;
 
 	/**
-	 * Set the asset type.
+	 * Set the CDN zone.
 	 *
-	 * @param string $type The asset type (image, video, etc...).
+	 * @param string $zone CDN zone.
 	 *
 	 * @return self
 	 */
-	public function set_type( string $type ): self {
-		$this->type = $type;
+	public function set_zone( string $zone ): self {
+		$this->zone = $zone;
 
 		return $this;
 	}
@@ -41,11 +41,7 @@ class Bunny implements Provider {
 	public function url( string $origin ): ProviderResponse {
 		$image = $this->replace_cdn_url( $origin );
 
-		return new ProviderResponse(
-			$origin,
-			$this->type,
-			$image
-		);
+		return new ProviderResponse( $origin, $image );
 	}
 
 	/**
@@ -59,7 +55,7 @@ class Bunny implements Provider {
 	 */
 	private function replace_cdn_url( string $image_url ): string {
 		$domain = wp_parse_url( get_site_url(), PHP_URL_HOST );
-		// TODO: this should be a setting.
-		return str_replace( $domain, 'bunny.net', $image_url );
+
+		return str_replace( $domain, $this->zone, $image_url );
 	}
 }

@@ -1,4 +1,4 @@
-=== MyOwnCDN: CDN made simple ===
+=== My Own CDN ===
 Plugin Name: My Own CDN
 Contributors: vanyukov, myowncdn
 Tags: cdn, fastly, bunny.net, cachefly

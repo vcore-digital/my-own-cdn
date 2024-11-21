@@ -11,6 +11,7 @@ namespace MyOwnCDN;
 use Exception;
 use MyOwnCDN\Api\API;
 use MyOwnCDN\Models\User;
+use MyOwnCDN\Responses\StatusResponse;
 use MyOwnCDN\Traits\HasSettings;
 use MyOwnCDN\Traits\HasUtils;
 use MyOwnCDN\Traits\HasView;
@@ -184,14 +185,7 @@ class Admin {
 
 		try {
 			$response = $this->api->status();
-
-			if ( ! empty( $response->provider ) ) {
-				$this->set_setting( 'provider', $response->provider );
-			}
-
-			if ( ! empty( $response->status ) ) {
-				$this->set_setting( 'status', $response->status );
-			}
+			$this->save_status( $response );
 
 			wp_send_json_success( $response );
 		} catch ( Exception $e ) {
@@ -210,14 +204,7 @@ class Admin {
 
 		try {
 			$response = $this->api->status();
-
-			if ( ! empty( $response->provider ) ) {
-				$this->set_setting( 'provider', $response->provider );
-			}
-
-			if ( ! empty( $response->status ) ) {
-				$this->set_setting( 'status', $response->status );
-			}
+			$this->save_status( $response );
 
 			wp_send_json_success( $response );
 		} catch ( Exception $e ) {
@@ -253,6 +240,29 @@ class Admin {
 		delete_option( 'moc-api-token' );
 
 		wp_send_json_success();
+	}
+
+	/**
+	 * Update settings from response.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param StatusResponse $response API response.
+	 *
+	 * @return void
+	 */
+	private function save_status( StatusResponse $response ): void {
+		if ( ! empty( $response->provider ) ) {
+			$this->set_setting( 'provider', $response->provider );
+		}
+
+		if ( ! empty( $response->status ) ) {
+			$this->set_setting( 'status', $response->status );
+		}
+
+		if ( ! empty( $response->zone ) ) {
+			$this->set_setting( 'zone', $response->zone );
+		}
 	}
 
 	/**

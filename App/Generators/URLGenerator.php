@@ -10,15 +10,16 @@
 
 namespace MyOwnCDN\Generators;
 
-use MyOwnCDN\Responses\ProviderResponse;
 use MyOwnCDN\Responses\URLResponse;
 use MyOwnCDN\Traits\HasProvider;
+use MyOwnCDN\Traits\HasRegex;
 
 /**
  * URLGenerator class.
  */
 class URLGenerator {
 	use HasProvider;
+	use HasRegex;
 
 	/**
 	 * Origin URL.
@@ -30,13 +31,31 @@ class URLGenerator {
 	protected ?string $origin = null;
 
 	/**
-	 * CDN URL.
+	 * Processed image.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @var string|null
 	 */
-	protected ?string $cdn_url = null;
+	protected ?string $processed = null;
+
+	/**
+	 * Image src attribute value.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected string $src = '';
+
+	/**
+	 * Image srcset attribute value.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected string $srcset = '';
 
 	/**
 	 * Perform the URL generation.
@@ -46,41 +65,94 @@ class URLGenerator {
 	 * @return URLResponse
 	 */
 	public function __invoke(): URLResponse {
-		$this->send_provider_request();
-		return new URLResponse( $this->cdn_url );
+		$this->processed = null;
+
+		if ( ! empty( $this->src ) && ! $this->is_source_tag() ) {
+			$this->process( $this->src );
+		}
+
+		if ( ! empty( $this->srcset ) ) {
+			$this->process( $this->srcset );
+		}
+
+		return new URLResponse( $this->processed );
 	}
 
 	/**
-	 * Set the origin URL.
+	 * Set the DOM element for the image.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $url Origin URL.
+	 * @param string $image The image DOM object.
 	 *
 	 * @return $this
 	 */
-	public function origin( string $url ): self {
-		// TODO: Check if valid URL provided.
-		$this->origin = $url;
+	public function dom( string $image ): self {
+		$this->origin = $image;
 
 		return $this;
 	}
 
 	/**
-	 * Forward the request to the provider.
+	 * Set the image source (src attribute).
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return ProviderResponse
+	 * @param string $src Src attribute.
+	 *
+	 * @return $this
 	 */
-	protected function send_provider_request(): ProviderResponse {
-		// TODO: improve how we pass over the image URL. Best to pass over something like an ImageRequest object that
-		// contains the URL, attachment ID, size, etc...
-		$response = $this->provider->url( $this->origin );
+	public function src( string $src ): self {
+		$this->src = $src;
 
-		// Similar to the above, use state to store the response message object.
-		$this->cdn_url = $response->cdn_url;
+		return $this;
+	}
 
-		return $response;
+	/**
+	 * Set the image srcset attribute and return the processed element.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $srcset Srcset attribute.
+	 *
+	 * @return $this
+	 */
+	public function srcset( string $srcset ): self {
+		$this->srcset = $srcset;
+
+		return $this;
+	}
+
+	/**
+	 * Is this a <source> tag?
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	private function is_source_tag(): bool {
+		return 'source' === substr( $this->origin, 1, 6 );
+	}
+
+	/**
+	 * Process image element.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $content Which attribute to process.
+	 */
+	private function process( string $content ) {
+		preg_match_all( $this->get_valid_urls(), $content, $urls );
+		if ( ! is_array( $urls ) || empty( $urls[0] ) ) {
+			return;
+		}
+
+		foreach ( $urls[0] as $link ) {
+			$response = $this->provider->url( $link );
+
+			if ( $response->cdn_url ) {
+				$this->processed = str_replace( $link, $response->cdn_url, empty( $this->processed ) ? $this->origin : $this->processed );
+			}
+		}
 	}
 }

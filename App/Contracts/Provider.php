@@ -19,11 +19,11 @@ interface Provider {
 	/**
 	 * Set the asset type.
 	 *
-	 * @param string $type The asset type (image, video, etc...).
+	 * @param string $zone CDN zone.
 	 *
 	 * @return Provider
 	 */
-	public function set_type( string $type ): Provider;
+	public function set_zone( string $zone ): Provider;
 
 	/**
 	 * Takes the origin URL and converts it to the provider supported URL.
