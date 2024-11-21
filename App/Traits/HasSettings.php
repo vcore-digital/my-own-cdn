@@ -8,6 +8,8 @@
 
 namespace MyOwnCDN\Traits;
 
+use MyOwnCDN\Responses\StatusResponse;
+
 /**
  * HasSettings trait.
  */
@@ -56,5 +58,28 @@ trait HasSettings {
 	public function get_setting( string $key ) {
 		$settings = get_option( 'moc-settings', array() );
 		return $settings[ $key ] ?? false;
+	}
+
+	/**
+	 * Update settings from response.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param StatusResponse $response API response.
+	 *
+	 * @return void
+	 */
+	public function save_status( StatusResponse $response ): void {
+		if ( ! empty( $response->provider ) ) {
+			$this->set_setting( 'provider', $response->provider );
+		}
+
+		if ( ! empty( $response->status ) ) {
+			$this->set_setting( 'status', $response->status );
+		}
+
+		if ( ! empty( $response->zone ) ) {
+			$this->set_setting( 'zone', $response->zone );
+		}
 	}
 }

@@ -46,7 +46,7 @@ class Parser {
 			return false;
 		}
 
-		return true;
+		return 'enabled' === $this->get_setting( 'status' );
 	}
 
 	/**
