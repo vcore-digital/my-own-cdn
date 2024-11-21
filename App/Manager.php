@@ -60,14 +60,6 @@ class Manager {
 			return $this->cache[ $name ];
 		}
 
-		// Look for a custom provider.
-		$provider_method = 'create_' . strtolower( $name ) . '_provider';
-
-		if ( method_exists( $this, $provider_method ) ) {
-			$this->cache[ $name ] = $this->{$provider_method}();
-			return $this->cache[ $name ];
-		}
-
 		/* translators: %s: provider name */
 		throw new InvalidArgumentException( sprintf( esc_html__( 'Provider [%s] is not supported.', 'my-own-cdn' ), esc_html( $name ) ) );
 	}

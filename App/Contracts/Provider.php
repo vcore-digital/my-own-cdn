@@ -17,15 +17,6 @@ use MyOwnCDN\Responses\ProviderResponse;
  */
 interface Provider {
 	/**
-	 * Set the asset type.
-	 *
-	 * @param string $zone CDN zone.
-	 *
-	 * @return Provider
-	 */
-	public function set_zone( string $zone ): Provider;
-
-	/**
 	 * Takes the origin URL and converts it to the provider supported URL.
 	 *
 	 * @since 1.0.0
