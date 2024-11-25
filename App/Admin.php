@@ -244,6 +244,9 @@ class Admin {
 		$this->check_permissions();
 
 		delete_option( 'moc-api-token' );
+		delete_option( 'moc-settings' );
+
+		Core::remove_cron();
 
 		wp_send_json_success();
 	}
