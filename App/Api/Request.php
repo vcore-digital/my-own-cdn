@@ -232,7 +232,7 @@ abstract class Request {
 		$body = wp_remote_retrieve_body( $response );
 		$body = json_decode( $body );
 
-		if ( 200 === $code || 201 === $code ) {
+		if ( 200 === $code || 201 === $code || 202 === $code ) {
 			return $body;
 		}
 

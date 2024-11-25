@@ -8,6 +8,7 @@ import { login } from './actions/login';
 import { logout } from './actions/logout';
 import { status } from './actions/status';
 import { cache } from './actions/cache';
+import { enable } from './actions/enable';
 
 /**
  * MOC class.
@@ -27,6 +28,7 @@ class MOC {
 	 */
 	bindEvents() {
 		this.addEventListener('moc-api-key-form', 'submit', login);
+		this.addEventListener('moc-provider-form', 'submit', enable);
 		this.addEventListener('moc-logout-btn', 'click', logout);
 		this.addEventListener('moc-status-btn', 'click', status);
 		this.addEventListener('moc-clear-cache', 'click', cache);

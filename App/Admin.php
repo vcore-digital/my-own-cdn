@@ -53,6 +53,7 @@ class Admin {
 			add_action( 'wp_ajax_moc_logout', array( $this, 'logout' ) );
 			add_action( 'wp_ajax_moc_update_status', array( $this, 'update_status' ) );
 			add_action( 'wp_ajax_moc_clear_cache', array( $this, 'clear_cache' ) );
+			add_action( 'wp_ajax_moc_enable', array( $this, 'enable' ) );
 		}
 	}
 
@@ -245,6 +246,27 @@ class Admin {
 		delete_option( 'moc-api-token' );
 
 		wp_send_json_success();
+	}
+
+	/**
+	 * Enable selected provider.
+	 *
+	 * @since 1.0.0
+	 */
+	public function enable(): void {
+		$this->check_permissions();
+
+		$provider = filter_input( INPUT_POST, 'provider', FILTER_UNSAFE_RAW );
+		$provider = sanitize_text_field( $provider );
+
+		try {
+			$response = $this->api->enable( $provider );
+			$this->save_status( $response );
+
+			wp_send_json_success( $response );
+		} catch ( Exception $e ) {
+			wp_send_json_error( $e->getMessage() );
+		}
 	}
 
 	/**

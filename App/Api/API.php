@@ -68,4 +68,34 @@ class API extends Request {
 
 		return $this->process_response( $this->request( $this->get_url_params() ) );
 	}
+
+	/**
+	 * Enable CDN provider.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $provider Provider.
+	 *
+	 * @return StatusResponse
+	 * @throws Exception API issues.
+	 */
+	public function enable( string $provider ): StatusResponse {
+		$this->set_method( 'POST' );
+		$this->set_endpoint( 'enable' );
+
+		$params = array_merge(
+			array(
+				'provider' => $provider,
+			),
+			$this->get_url_params()
+		);
+
+		$response = $this->process_response( $this->request( $params ) );
+
+		return new StatusResponse(
+			$response->provider ?? '',
+			$response->status ?? '',
+			$response->zone ?? '',
+		);
+	}
 }
