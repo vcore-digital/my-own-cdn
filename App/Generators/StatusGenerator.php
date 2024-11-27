@@ -33,7 +33,7 @@ class StatusGenerator {
 		}
 
 		if ( 'processing' === $status ) {
-			return esc_html__( 'CDN activating...', 'my-own-cdn' );
+			return esc_html__( 'CDN activating. Some providers might take up to 30 minutes to init the zones for the first time. Click "Refresh status" link below to update the status.', 'my-own-cdn' );
 		}
 
 		if ( 'failed' === $status ) {
