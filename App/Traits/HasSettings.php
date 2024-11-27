@@ -70,16 +70,13 @@ trait HasSettings {
 	 * @return void
 	 */
 	public function save_status( StatusResponse $response ): void {
-		if ( ! empty( $response->provider ) ) {
-			$this->set_setting( 'provider', $response->provider );
+		// Status must not be empty.
+		if ( empty( $response->status ) ) {
+			return;
 		}
 
-		if ( ! empty( $response->status ) ) {
-			$this->set_setting( 'status', $response->status );
-		}
-
-		if ( ! empty( $response->zone ) ) {
-			$this->set_setting( 'zone', $response->zone );
-		}
+		$this->set_setting( 'provider', $response->provider );
+		$this->set_setting( 'status', $response->status );
+		$this->set_setting( 'zone', $response->zone );
 	}
 }
