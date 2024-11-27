@@ -29,7 +29,7 @@ class API extends Request {
 	 */
 	private function get_url_params(): array {
 		return array(
-			'site' => site_url(),
+			'site' => apply_filters( 'my_own_cdn_site_url', site_url() ),
 		);
 	}
 
