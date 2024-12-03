@@ -11,8 +11,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( 'moc-api-token' );
-delete_option( 'moc-settings' );
+delete_option( 'myowncdn-api-token' );
+delete_option( 'myowncdn-settings' );
 
 require_once __DIR__ . '/App/Core.php';
 MyOwnCDN\Core::remove_cron();
