@@ -34,7 +34,7 @@ trait HasView {
 	 * @return void
 	 */
 	protected function view( string $file ) {
-		$view = MY_OWN_CDN_PATH . 'App/Views/' . $file . '.php';
+		$view = MYOWNCDN_PATH . 'App/Views/' . $file . '.php';
 
 		if ( ! file_exists( $view ) ) {
 			return;

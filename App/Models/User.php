@@ -20,7 +20,7 @@ class User {
 	 * @param string $value API token.
 	 */
 	public static function set_token( string $value ): void {
-		update_option( 'moc-api-token', $value, false );
+		update_option( 'myowncdn-api-token', $value, false );
 	}
 
 	/**
@@ -29,7 +29,7 @@ class User {
 	 * @since 1.0.0
 	 */
 	public static function delete_token(): void {
-		delete_option( 'moc-api-token' );
+		delete_option( 'myowncdn-api-token' );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class User {
 	 * @return string
 	 */
 	public static function get_token(): string {
-		$token = get_option( 'moc-api-token', '' );
+		$token = get_option( 'myowncdn-api-token', '' );
 
 		if ( defined( 'MY_OWN_CDN_API_TOKEN' ) && MY_OWN_CDN_API_TOKEN ) {
 			$token = MY_OWN_CDN_API_TOKEN;

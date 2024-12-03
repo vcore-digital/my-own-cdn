@@ -27,8 +27,8 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 const VERSION = '1.0.0';
-define( 'MY_OWN_CDN_PATH', plugin_dir_path( __FILE__ ) );
-define( 'MY_OWN_CDN_URL', plugin_dir_url( __FILE__ ) );
+define( 'MYOWNCDN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'MYOWNCDN_URL', plugin_dir_url( __FILE__ ) );
 
 spl_autoload_register( __NAMESPACE__ . '\autoload' );
 
@@ -47,7 +47,7 @@ function autoload( string $class_name ): void {
 	$rel_class = substr( $class_name, $length );
 	$rel_class = str_replace( '\\', DIRECTORY_SEPARATOR, $rel_class );
 
-	$file = MY_OWN_CDN_PATH . 'App/' . $rel_class . '.php';
+	$file = MYOWNCDN_PATH . 'App/' . $rel_class . '.php';
 
 	if ( file_exists( $file ) ) {
 		require_once $file;

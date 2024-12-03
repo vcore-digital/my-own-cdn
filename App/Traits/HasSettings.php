@@ -39,11 +39,11 @@ trait HasSettings {
 			return;
 		}
 
-		$settings = get_option( 'moc-settings', array() );
+		$settings = get_option( 'myowncdn-settings', array() );
 
 		$settings[ $key ] = $value;
 
-		update_option( 'moc-settings', $settings, false );
+		update_option( 'myowncdn-settings', $settings, false );
 	}
 
 	/**
@@ -56,7 +56,7 @@ trait HasSettings {
 	 * @return mixed
 	 */
 	public function get_setting( string $key ) {
-		$settings = get_option( 'moc-settings', array() );
+		$settings = get_option( 'myowncdn-settings', array() );
 		return $settings[ $key ] ?? false;
 	}
 

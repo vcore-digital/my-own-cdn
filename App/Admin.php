@@ -83,7 +83,7 @@ class Admin {
 		load_plugin_textdomain(
 			$this->get_slug(),
 			false,
-			plugin_basename( MY_OWN_CDN_PATH ) . '/languages'
+			plugin_basename( MYOWNCDN_PATH ) . '/languages'
 		);
 	}
 
@@ -102,14 +102,14 @@ class Admin {
 
 		wp_enqueue_style(
 			$this->get_slug(),
-			MY_OWN_CDN_URL . 'assets/css/moc.min.css',
+            MYOWNCDN_URL . 'assets/css/moc.min.css',
 			array(),
 			VERSION
 		);
 
 		wp_enqueue_script(
 			$this->get_slug(),
-			MY_OWN_CDN_URL . 'assets/js/moc.min.js',
+            MYOWNCDN_URL . 'assets/js/moc.min.js',
 			array(),
 			VERSION,
 			true
@@ -243,8 +243,8 @@ class Admin {
 	public function logout(): void {
 		$this->check_permissions();
 
-		delete_option( 'moc-api-token' );
-		delete_option( 'moc-settings' );
+		delete_option( 'myowncdn-api-token' );
+		delete_option( 'myowncdn-settings' );
 
 		Core::remove_cron();
 
