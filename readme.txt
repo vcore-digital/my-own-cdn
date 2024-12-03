@@ -33,6 +33,13 @@ If you prefer a prepaid plan - no problem, we have several options for you as we
 
 Absolutely! You have full control—switch or pause your setup whenever you need, with complete flexibility.
 
+== External services ==
+
+This plugin connects to an API to obtain details about the connected CDN provider, it's needed to obtain the CDN domain that is used to pull assets from the site, as well as maintain an accurate status of the service.
+
+It sends the site URL every time a user updates the CDN status via the plugin settings, as well as via the daily cron action. This is required to obtain the latest status of the CDN service.
+This service is provided by "vCore Digital Pty Ltd" (doing business as MyOwnCDN): <a href="https://myowncdn.com/terms-of-service">terms of use</a>, <a href="https://myowncdn.com/privacy-policy">privacy policy</a>.
+
 == Screenshots ==
 
 1. Plugin options and settings
