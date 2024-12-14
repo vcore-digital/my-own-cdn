@@ -2,12 +2,11 @@
 /.git export-ignore
 /.github export-ignore
 /.wordpress-org export-ignore
-/assets/scripts export-ignore
-/assets/styles export-ignore
 /node_modules export-ignore
 
 # Files
 /.distignore export-ignore
+/.eslintrc.json export-ignore
 /.gitattributes export-ignore
 /.gitignore export-ignore
 /package.json export-ignore

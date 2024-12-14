@@ -1,16 +1,12 @@
 /.git
 /.github
 /.wordpress-org
-/assets/scripts
-/assets/styles
 /node_modules
 
 .distignore
 .eslintrc.json
 .gitattributes
 .gitignore
-LICENSE
 package.json
 package-lock.json
-tsconfig.json
 webpack.config.js
