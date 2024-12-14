@@ -46,7 +46,7 @@ This service is provided by "vCore Digital Pty Ltd" (doing business as MyOwnCDN)
 
 == Changelog ==
 
-= 1.0.0 - 01.12.2024 =
+= 1.0.0 - 14.12.2024 =
 
 First release
 
